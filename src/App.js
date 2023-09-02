@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { CssBaseline } from "@mui/material";
+import { useSelector } from "react-redux";
+import ThemeProvider from "./theme/index";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Class from "./pages/Class";
+import Sidebar from "./Layout/MainLayout/DrawerNav";
+import MainLayout from "./Layout/MainLayout/MainLayout";
+import Router from "./Router";
 function App() {
+  const mode = useSelector((state) => state.darkMode.mode);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <ThemeProvider>
+        <CssBaseline>
+          <Router/>
+        </CssBaseline>
+      </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
