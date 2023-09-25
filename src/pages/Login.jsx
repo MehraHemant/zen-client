@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  CircularProgress,
   Container,
   Grid,
   TextField,
@@ -89,8 +90,8 @@ const Login = () => {
                     sx={{ mt: 3, mb: 2 }}
                     size="large"
                     fullWidth
-                  >
-                    Login
+                    >
+                    {state.isLoading?<CircularProgress/>:"Login"}
                   </Button>
                   <Box width={"100%"}>
                     <Typography
