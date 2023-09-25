@@ -1,4 +1,4 @@
-import { DeleteOutline, EditAttributesOutlined } from "@mui/icons-material";
+import { EditAttributesOutlined } from "@mui/icons-material";
 import { Button, Card, Grid, Stack, Typography } from "@mui/material";
 import moment from "moment";
 import React from "react";

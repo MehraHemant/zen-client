@@ -1,21 +1,17 @@
-import { Box, Container, Stack } from "@mui/material";
-import React from "react";
+import { Box, Stack } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import Header from "../Component/Header";
 import RequirementCard from "../Component/RequirementCard";
+import axios from "axios";
+import {base_url} from "../features/utils"
 
 const Requirement = () => {
-  const data = [
-    {
-      name: "demo",
-      website: "demo",
-      role: "demo",
-      ctc: "demo",
-      natureOfJob: "demo",
-      openings: "demo",
-      deadline: "demo",
-      program: "demo",
-    },
-  ];
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    axios.get(`${base_url}/requirements/get`).then((response) => {
+      setData(response.data);
+    });
+  }, []);
   return (
     <Box>
       <Header title={"Requirements"} />

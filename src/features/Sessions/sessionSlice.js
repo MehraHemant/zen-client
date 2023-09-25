@@ -11,12 +11,24 @@ export const getSession = createAsyncThunk(
     }
   }
 );
+
+export const getSingleSession = createAsyncThunk(
+  "/session/get-single-session",
+  async (id, thunkAPI) => {
+    try {
+      return await sessionService.getSingleSession(id);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error);
+    }
+  }
+);
 const initialState = {
   sessions: [],
   isLoading: false,
   isSuccess: false,
   isError: false,
   message: "",
+  session: undefined,
 };
 
 const sessionSlice = createSlice({
@@ -35,6 +47,21 @@ const sessionSlice = createSlice({
         state.sessions = action.payload;
       })
       .addCase(getSession.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        state.isSuccess = false;
+        state.message = action.payload;
+      })
+      .addCase(getSingleSession.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleSession.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isError = false;
+        state.isSuccess = true;
+        state.session = action.payload;
+      })
+      .addCase(getSingleSession.rejected, (state, action) => {
         state.isError = true;
         state.isLoading = false;
         state.isSuccess = false;

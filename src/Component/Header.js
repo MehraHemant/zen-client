@@ -8,15 +8,23 @@ import {
 } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { getProfile } from "../features/student/studentSlice";
+import { logout } from "../features/auth/authSlice";
 
 const Header = ({ title }) => {
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const primary = grey[200];
   const [anchorEl, setAnchorEl] = useState(null);
   const handleOpenUserMenu = (event) => setAnchorEl(event.currentTarget);
   const handleCloseUserMenu = () => setAnchorEl(null);
 
+  useState(() => {
+    dispatch(getProfile(state.id));
+  }, []);
   return (
     <Box
       bgcolor={primary}
@@ -32,8 +40,14 @@ const Header = ({ title }) => {
         </Typography>
       </Box>
       <Box display="flex" alignItems="center">
-        <Typography variant="h5" sx={{ display: { xs: "block" } }} color={'text.secondary'} fontWeight={500} mr={2}>
-          Name Here
+        <Typography
+          variant="h5"
+          sx={{ display: { xs: "block" } }}
+          color={"text.secondary"}
+          fontWeight={500}
+          mr={2}
+        >
+          {state.name}
         </Typography>
         <IconButton onClick={handleOpenUserMenu}>
           <Avatar></Avatar>
@@ -62,6 +76,7 @@ const Header = ({ title }) => {
           onClick={() => {
             handleCloseUserMenu();
             navigate("/login");
+            dispatch(logout());
           }}
         >
           <Typography textAlign="center">Logout</Typography>

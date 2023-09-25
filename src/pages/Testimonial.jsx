@@ -3,7 +3,6 @@ import Header from "../Component/Header";
 import TestimonialDialog from "../Component/TestimonialDialog";
 import { Box, Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import Cloudinary from "../Component/Cloudinary";
 
 const Testimonial = () => {
   const [open, setOpen] = useState(false);
@@ -31,7 +30,6 @@ const Testimonial = () => {
         </Button>
       </Box>
       <TestimonialDialog open={open} onClose={handleClose} />
-      <Cloudinary/>
     </>
   );
 };

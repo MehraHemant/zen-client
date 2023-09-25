@@ -8,7 +8,7 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../utils/Images/download.png";
 import { sideBarData } from "./config";

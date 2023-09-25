@@ -1,40 +1,59 @@
-import React, { useState } from 'react'
-import ImageUpload from './ImageUpload'
-import axios from 'axios';
-import { Button } from '@mui/material';
+import React, { useState } from "react";
+import axios from "axios";
+import { Button } from "@mui/material";
+import styled from "@emotion/styled";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+
+const VisuallyHiddenInput = styled("input")`
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  white-space: nowrap;
+  width: 1px;
+`;
 
 const Cloudinary = () => {
-    const [image, setImage] = useState();
-    let [imageUpload, setImageUpload] = useState([]);
+  const [image, setImage] = useState();
 
-    const handleImage = (e) =>{
-        if(e.target.files[0]){
-            setImage({
-                src : URL.createObjectURL(e.target.files[0]),
-                alt: e.target.files[0].name
-            })
-        }
-    }
-    const uploadToCloudinary = async (file) =>{
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("upload_preset", "dcmmsxbjf")
-        let data = "";
-        await axios.post("https://api.cloudinary.com/v1_1/dcmmsxbjf", formData).then((response)=>{
-            data = response.data["secure_url"]
-        });
-        return data;
-    }
-    const handleSubmit = async(e)=>{
-        imageUpload = image;
-        await uploadToCloudinary(image);
-    }
+  const uploadToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "lwxv5qlp");
+    formData.append("cloud_name", "dcmmsxbjf");
+    await axios
+      .post("https://api.cloudinary.com/v1_1/dcmmsxbjf/image/upload", formData)
+      .then((response) => {
+        console.log(response.data.secure_url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+  const handleSubmit = async (e) => {
+    await uploadToCloudinary(image);
+  };
   return (
     <div>
-    <ImageUpload imageUpload={handleImage} image={imageUpload}/>
-    <Button type='submit' onClick={(e) => handleSubmit(e)}>Save</Button>
+      <Button
+        component="label"
+        variant="contained"
+        startIcon={<CloudUploadIcon />}
+      >
+        Upload a file
+        <VisuallyHiddenInput
+          type="file"
+          onClick={(e) =>setImage(e.target.files[0])}
+        />
+      </Button>
+      <Button type="submit" onClick={handleSubmit}>
+        Save
+      </Button>
     </div>
-  )
-}
+  );
+};
 
-export default Cloudinary
+export default Cloudinary;

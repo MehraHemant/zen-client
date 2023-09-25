@@ -2,7 +2,6 @@ import React from "react";
 import { Navigate, useRoutes } from "react-router-dom";
 import MainLayout from "./Layout/MainLayout/MainLayout";
 import Class from "./pages/Class";
-import Dashboard from "./pages/Dashboard";
 import Task from "./pages/Task";
 import Login from "./pages/Login";
 import Page404 from "./pages/Page404";
@@ -16,6 +15,10 @@ import Leave from "./pages/Leave";
 import Certificate from "./pages/Certificate";
 import Testimonial from "./pages/Testimonial";
 import Leaderboard from "./pages/Leaderboard";
+import Syllabus from "./pages/Syllabus";
+import PrivateRoute from "./PrivateRoute";
+import Webcode from "./pages/Webcode";
+import Capstone from "./pages/Capstone";
 
 const Router = () => {
   const routes = useRoutes([
@@ -24,19 +27,126 @@ const Router = () => {
       element: <MainLayout />,
       children: [
         { element: <Navigate to="/class" />, index: true },
-        { path: "class", element: <Class /> },
-        { path: "dashboard", element: <Dashboard /> },
-        { path: "task", element: <Task /> },
-        { path: "requirements", element: <Requirement /> },
-        { path: "portfolio_submission", element: <Portfolio /> },
-        { path: "application", element: <Application /> },
-        { path: "interviewtask", element: <Interview /> },
-        { path: "placement_board", element: <Placement /> },
-        { path: "profile", element: <Profile /> },
-        { path: "leave_application", element: <Leave /> },
-        { path: "certificate", element: <Certificate /> },
-        { path: "testimonial", element: <Testimonial /> },
-        { path: "leaderboard", element: <Leaderboard /> },
+        {
+          path: "class",
+          element: (
+            <PrivateRoute>
+              <Class />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "task",
+          element: (
+            <PrivateRoute>
+              <Task />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "requirements",
+          element: (
+            <PrivateRoute>
+              <Requirement />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "portfolio_submission",
+          element: (
+            <PrivateRoute>
+              <Portfolio />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "application",
+          element: (
+            <PrivateRoute>
+              <Application />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "interviewtask",
+          element: (
+            <PrivateRoute>
+              <Interview />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "placement_board",
+          element: (
+            <PrivateRoute>
+              <Placement />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "profile",
+          element: (
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "leave_application",
+          element: (
+            <PrivateRoute>
+              <Leave />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "certificate",
+          element: (
+            <PrivateRoute>
+              <Certificate />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "testimonial",
+          element: (
+            <PrivateRoute>
+              <Testimonial />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "leaderboard",
+          element: (
+            <PrivateRoute>
+              <Leaderboard />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "syllabus",
+          element: (
+            <PrivateRoute>
+              <Syllabus />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "webcode",
+          element: (
+            <PrivateRoute>
+              <Webcode />
+            </PrivateRoute>
+          ),
+        },
+        {
+          path: "capstone",
+          element: (
+            <PrivateRoute>
+              <Capstone />
+            </PrivateRoute>
+          ),
+        },
       ],
     },
     {

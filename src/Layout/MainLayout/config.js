@@ -4,7 +4,6 @@ import {
   AssignmentTurnedInRounded,
   BookmarkAdded,
   ChecklistOutlined,
-  DashboardRounded,
   DomainAddRounded,
   ImportantDevicesRounded,
   ListAltRounded,
@@ -27,11 +26,6 @@ export const sideBarData = {
       link: "class",
     },
     {
-      logo: <DashboardRounded />,
-      describe: "Dashboard",
-      link: "/dashboard",
-    },
-    {
       logo: <AssignmentTurnedInRounded />,
       describe: "Tasks",
       link: "task",
@@ -45,11 +39,6 @@ export const sideBarData = {
       logo: <AssignmentRounded />,
       describe: "Capstone",
       link: "capstone",
-    },
-    {
-      logo: <QuizRounded />,
-      describe: "Queries",
-      link: "queries",
     },
     {
       logo: <DomainAddRounded />,

@@ -2,7 +2,6 @@ import {
   Box,
   Card,
   CardContent,
-  CardHeader,
   Chip,
   Grid,
   Link,
@@ -11,7 +10,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export const TaskCard = ({handleClick}) => {
+export const TaskCard = ({handleClick, data}) => {
   return (
     <Box padding={1} width={720}>
       <Card onClick={handleClick}
@@ -26,37 +25,33 @@ export const TaskCard = ({handleClick}) => {
             color={"text.secondary"}
             gutterBottom
           >
-            Name Here
+            {data?.student.name}
           </Typography>
           <Stack ml={1}>
             <Typography variant="body1" color={"text.disabled"}>
-              Batch Name
             </Typography>
             <Typography variant="body1" color={"text.disabled"}>
-              Session Title
+              {data?.activities.session.title}
             </Typography>
           </Stack>
         </CardContent>
         <CardContent sx={{ display: "flex", flexDirection: "column" }}>
           <Typography variant="body2" color={"text.disabled"}>
-            Submitted on
-          </Typography>
-          <Typography variant="body2" color={"text.disabled"} gutterBottom>
-            Submitted on
+            {data?.updatedAt}
           </Typography>
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Chip
               variant="outlined"
               sx={{ paddingX: 1, mr: 1 }}
               color="warning"
-              label={7}
-            />
+              label={data?.marks}
+              />
             <Chip
               variant="filled"
               sx={{ paddingX: 2 }}
               color="warning"
-              label={"Task"}
-            />
+              label={data?.activities.type}
+              />
           </Stack>
         </CardContent>
       </Card>
@@ -69,7 +64,7 @@ export const ExtendCard = () => {
     <Card variant="outlined" sx={{ margin: 3, padding: 2 }}>
       <Grid container>
         <Grid item xs container>
-          <Grid item xs={9}>
+          <Grid iitemtem xs={9}>
             <Typography variant="h5" color="text.primary">
               Name here
             </Typography>
