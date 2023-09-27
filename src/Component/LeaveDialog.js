@@ -1,8 +1,10 @@
 import {
+  Alert,
   Box,
   Button,
   Dialog,
   MenuItem,
+  Snackbar,
   Stack,
   TextField,
   Typography,
@@ -11,14 +13,23 @@ import "moment/locale/en-gb";
 import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { useFormik } from "formik";
 import { AdapterMoment } from "@mui/x-date-pickers/AdapterMoment";
-import React from "react";
+import React, { useState } from "react";
 import moment from "moment";
+import { useSelector } from "react-redux";
 
-const LeaveDialog = ({open, onClose, onSubmit}) => {
+const LeaveDialog = ({ open, onClose, onSubmit }) => {
+  const [message, setMessage] = useState(false);
   const formik = useFormik({
-    initialValues: { onDate: new Date(), fromDate: new Date(), toDate: "", days: 1, reason: "" },
-    onSubmit: (values) => {
+    initialValues: {
+      onDate: new Date(),
+      fromDate: new Date(),
+      toDate: "",
+      days: 1,
+      reason: "",
+    },
+    onSubmit: async (values) => {
       onSubmit(values);
+      
     },
     validateOnChange: false,
   });
@@ -164,6 +175,7 @@ const LeaveDialog = ({open, onClose, onSubmit}) => {
               Submit
             </Button>
           </Stack>
+
         </Box>
       </Dialog>
     </>
