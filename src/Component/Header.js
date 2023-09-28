@@ -23,8 +23,8 @@ const Header = ({ title }) => {
   const handleCloseUserMenu = () => setAnchorEl(null);
 
   useState(() => {
-    dispatch(getProfile(state.id));
-  }, []);
+    dispatch(getProfile());
+   });
   
   return (
     <Box

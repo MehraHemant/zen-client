@@ -10,9 +10,9 @@ const initialState = {
 };
 export const getProfile = createAsyncThunk(
   "user/get_profile",
-  async (id, thunkAPI) => {
+  async (thunkAPI) => {
     try {
-      return await studentService.getProfile(id);
+      return await studentService.getProfile();
     } catch (error) {
       return thunkAPI.rejectWithValue(error);
     }

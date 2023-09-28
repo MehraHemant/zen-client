@@ -11,17 +11,20 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useDispatch, useSelector } from "react-redux";
+import { editProfile } from "../features/student/studentSlice";
 
 const validationSchema = yup.object({
   github: yup.string().required(),
 });
 const Portfolio = () => {
+  useSelector((state) => state.student.student);
+  const dispatch = useDispatch();
   const formik = useFormik({
-    initialValues: {},
+    initialValues: {github: "", portfolio: "", resume: ""},
     validationSchema,
-    onSubmit: (values, { resetForm }) => {
-      console.log(values);
-      resetForm({ values: "" });
+    onSubmit: (values) => {
+      dispatch(editProfile(values));
     },
   });
   return (
@@ -95,7 +98,7 @@ const Portfolio = () => {
           <Grid container direction={"row"}>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>
-                Status : 
+                Status :
               </Typography>
               <Typography variant="body2" color={"text.secondary"}>
                 No Submitted
@@ -103,7 +106,7 @@ const Portfolio = () => {
             </Grid>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>
-                Batch : 
+                Batch :
               </Typography>
               <Typography variant="body2" color={"text.secondary"}>
                 No Submitted
@@ -111,18 +114,16 @@ const Portfolio = () => {
             </Grid>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>
-                Comment: 
+                Comment:
               </Typography>
-              <Typography variant="body2" color={"text.secondary"}>
-               
-              </Typography>
+              <Typography variant="body2" color={"text.secondary"}></Typography>
             </Grid>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>
-                Reviewed By: 
+                Reviewed By:
               </Typography>
               <Typography variant="body2" color={"text.secondary"}>
-               Not Submitted
+                Not Submitted
               </Typography>
             </Grid>
           </Grid>

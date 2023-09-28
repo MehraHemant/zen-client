@@ -2,12 +2,12 @@ import axios from 'axios';
 import { base_url, config } from '../utils';
 
 const editProfile = async(userData)=>{
-    const response = await axios.post(`${base_url}/${userData.id}`, userData.data, config);
+    const response = await axios.put(`${base_url}/updateSelf`, userData, config);
     return response.data;
   };
 
-  const getProfile = async(id)=>{
-    const response =await axios.get(`${base_url}/${id}`, config);
+  const getProfile = async()=>{
+    const response =await axios.get(`${base_url}/getSelf`, config);
     return response.data;
   }
   

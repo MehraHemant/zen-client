@@ -11,7 +11,7 @@ const Profile = () => {
   const formik = useFormik({
     initialValues: student.student,
     onSubmit: (values) => {
-      dispatch(editProfile(student.student._id, values));
+      dispatch(editProfile(values));
     },
   });
   return (
