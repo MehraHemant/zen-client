@@ -25,6 +25,7 @@ const Header = ({ title }) => {
   useState(() => {
     dispatch(getProfile(state.id));
   }, []);
+  
   return (
     <Box
       bgcolor={primary}

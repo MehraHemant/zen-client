@@ -7,23 +7,25 @@ import { getTask } from "../features/Tasks/tasksSlice";
 
 const Task = () => {
   const dispatch = useDispatch();
-  const task = useSelector(state=> state.task)
+  const task = useSelector((state) => state.task);
   const [data, setData] = useState();
   const handleClick = (item) => {
     setData(item);
   };
-useEffect(()=>{
-  dispatch(getTask());
-}, [])
+  useEffect(() => {
+    dispatch(getTask());
+  }, []);
   return (
     <div>
       <Header title={"Task"} />
       <Grid container direction={"row"} justifyContent={"center"}>
         <Grid item xs={6}>
           <Stack direction="column" alignItems={"center"}>
-            {task.tasks?.map((item) => (
-              <TaskCard data={item} handleClick={() => handleClick(item)} />
-            ))}
+            {task.tasks.map((item, i) => {
+              return (
+                <TaskCard data={item} key={i} handleClick={() => handleClick(item)} />
+              );
+            })}
           </Stack>
         </Grid>
         {data && (

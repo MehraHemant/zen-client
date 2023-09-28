@@ -35,6 +35,7 @@ const Login = () => {
   });
   useEffect(() => {
     localStorage.getItem("user") && navigate("/class");
+    state.isSuccess&&window.location.reload();
   }, [state.isLoading]);
   return (
     <Box boxSizing={"border-box"}>
@@ -91,7 +92,7 @@ const Login = () => {
                     size="large"
                     fullWidth
                     >
-                    {state.isLoading?<CircularProgress/>:"Login"}
+                    {state.isLoading?<CircularProgress sx={{color:"#fff"}}/>:"Login"}
                   </Button>
                   <Box width={"100%"}>
                     <Typography

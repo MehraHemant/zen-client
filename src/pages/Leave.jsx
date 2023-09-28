@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import Header from "../Component/Header";
-import { Box, Button } from "@mui/material";
+import { Alert, Box, Button, Snackbar } from "@mui/material";
 import { Add } from "@mui/icons-material";
 import LeaveDialog from "../Component/LeaveDialog";
+import emailjs from '@emailjs/browser';
+import { useSelector } from "react-redux";
 
 const Leave = () => {
   const state = useSelector((state) => state.auth.user);
   const leave = 0;
   const [open, setOpen] = useState(false);
-  cosnt[(send, setSend)] = useState(false);
+  const[send, setSend] = useState(false);
   const handleClose = () => setOpen(false);
   const handleOpen = () => setOpen(true);
   const handleSubmit = async (values) => {

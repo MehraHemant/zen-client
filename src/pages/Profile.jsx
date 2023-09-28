@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import Header from "../Component/Header";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfile, getProfile } from "../features/student/studentSlice";
+import { editProfile } from "../features/student/studentSlice";
 
 const Profile = () => {
   const student = useSelector((state) => state.student);
