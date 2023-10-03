@@ -19,6 +19,7 @@ import Syllabus from "./pages/Syllabus";
 import PrivateRoute from "./PrivateRoute";
 import Webcode from "./pages/Webcode";
 import Capstone from "./pages/Capstone";
+import Forgot_password from "./pages/Forgot_Password";
 
 const Router = () => {
   const routes = useRoutes([
@@ -152,6 +153,10 @@ const Router = () => {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/forgot_password",
+      element: <Forgot_password />,
     },
     { path: "404", element: <Page404 /> },
     {

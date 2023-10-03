@@ -11,5 +11,9 @@ const editProfile = async(userData)=>{
     return response.data;
   }
   
-  const studentService = {editProfile, getProfile};
+  const forgotPassword = async(userData)=>{
+    const response = await axios.post(`${base_url}/forgot-password`, userData);
+    return response.data;
+  }
+  const studentService = {editProfile, getProfile, forgotPassword};
   export default studentService;

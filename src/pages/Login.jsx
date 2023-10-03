@@ -100,6 +100,7 @@ const Login = () => {
                       color="secondary"
                       sx={{ cursor: "pointer" }}
                       mx={"auto"}
+                      onClick={()=>navigate('/forgot_password')}
                     >
                       Forgot Password ?
                     </Typography>
