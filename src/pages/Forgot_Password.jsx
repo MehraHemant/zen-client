@@ -31,12 +31,11 @@ const Forgot_password = () => {
     validationSchema: validation,
     onSubmit: (value) => {
       dispatch(forgotPassword(value));
-      console.log(value);
     },
   });
   useEffect(() => {
-    setOpen(true);
-  }, [state.isSucces, state.isError]);
+    !state.isLoading && (state.isSuccess||state.isError) && setOpen(true);
+  }, [state.isSuccess, state.isError]);
 
   return (
     <Box boxSizing={"border-box"}>
