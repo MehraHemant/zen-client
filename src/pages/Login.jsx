@@ -35,7 +35,6 @@ const Login = () => {
   });
   useEffect(() => {
     localStorage.getItem("user") && navigate("/class");
-    console.log(state.user)
     state.isSuccess&&window.location.reload();
   }, [state.isLoading]);
   return (
