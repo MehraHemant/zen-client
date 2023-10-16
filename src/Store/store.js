@@ -1,18 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
-import darkModeSlice from "../features/DarkMode/darkModeSlice";
-import sessionSlice from "../features/Sessions/sessionSlice";
-import authSlice from "../features/auth/authSlice";
-import studentSlice from "../features/student/studentSlice";
-import tasksSlice from "../features/Tasks/tasksSlice";
-import forgotPassword from "../features/student/forgot-password";
+import { myApi } from "../features/api";
+import myReducer from "../features/reducers";
 
 export const store = configureStore({
-    reducer:{
-        darkMode: darkModeSlice,
-        session: sessionSlice,
-        auth: authSlice,
-        student: studentSlice,
-        task: tasksSlice,
-        forgot_password: forgotPassword
-    }
-})
+  reducer: {
+    myApi: myApi.reducer,
+    myReducer: myReducer,
+  },
+
+  middleware: (getDefaultMiddleware) => [
+    ...getDefaultMiddleware(),
+    myApi.middleware,
+  ],
+});

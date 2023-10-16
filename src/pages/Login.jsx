@@ -4,22 +4,25 @@ import {
   CircularProgress,
   Container,
   Grid,
+  IconButton,
+  Stack,
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../utils/Images/download.png";
 import bg_img from "../utils/Images/home_bg.png";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
-import { login } from "../features/auth/authSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useLoginMutation } from "../features/api";
+import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
 
 const Login = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const state = useSelector((state) => state.auth);
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [login, { isLoading, isSuccess }] = useLoginMutation();
 
   const validation = yup.object({
     email: yup.string().required("Email is required"),
@@ -29,14 +32,15 @@ const Login = () => {
   const formik = useFormik({
     initialValues: { email: "user@demo.com", password: "User@demo" },
     validationSchema: validation,
-    onSubmit: (value) => {
-      dispatch(login(value));
+    onSubmit: async (value, { resetForm }) => {
+      try {
+        await login(value);
+        navigate("/class");
+      } catch (error) {
+        resetForm();
+      }
     },
   });
-  useEffect(() => {
-    localStorage.getItem("user") && navigate("/class");
-    state.isSuccess&&window.location.reload();
-  }, [state.isLoading]);
   return (
     <Box boxSizing={"border-box"}>
       <Grid container>
@@ -68,7 +72,7 @@ const Login = () => {
                   />
                   <TextField
                     color="secondary"
-                    type="password"
+                    type={!showPassword ? "password" : "text"}
                     name="password"
                     margin="normal"
                     placeholder="Enter Password"
@@ -78,6 +82,19 @@ const Login = () => {
                     variant="standard"
                     fullWidth
                     label="Password"
+                    InputProps={{
+                      endAdornment: (
+                        <IconButton
+                          onClick={() => setShowPassword((state) => !state)}
+                        >
+                          {showPassword ? (
+                            <VisibilityOutlined />
+                          ) : (
+                            <VisibilityOffOutlined />
+                          )}
+                        </IconButton>
+                      ),
+                    }}
                     error={
                       formik.touched.password && Boolean(formik.errors.password)
                     }
@@ -91,20 +108,33 @@ const Login = () => {
                     sx={{ mt: 3, mb: 2 }}
                     size="large"
                     fullWidth
-                    >
-                    {state.isLoading?<CircularProgress sx={{color:"#fff"}}/>:"Login"}
+                  >
+                    {isLoading ? (
+                      <CircularProgress sx={{ color: "#fff" }} />
+                    ) : (
+                      "Login"
+                    )}
                   </Button>
-                  <Box width={"100%"}>
+                  <Stack direction={"column"} gap={1} width={"100%"}>
                     <Typography
                       component="span"
                       color="secondary"
                       sx={{ cursor: "pointer" }}
                       mx={"auto"}
-                      onClick={()=>navigate('/forgot_password')}
+                      onClick={() => navigate("/forgot_password")}
                     >
                       Forgot Password ?
                     </Typography>
-                  </Box>
+                    <Typography
+                      component="span"
+                      color="secondary"
+                      sx={{ cursor: "pointer" }}
+                      mx={"auto"}
+                      onClick={() => navigate("/create_account")}
+                    >
+                      Don't have an account ?
+                    </Typography>
+                  </Stack>
                 </Box>
               </Box>
             </Container>

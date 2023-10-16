@@ -13,14 +13,11 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../utils/Images/download.png";
 import bg_img from "../utils/Images/home_bg.png";
-import { useDispatch, useSelector } from "react-redux";
-import { forgotPassword } from "../features/student/forgot-password";
-import { useEffect, useState } from "react";
+import { useForgotPasswordMutation } from "../features/api";
 
 const Forgot_password = () => {
-  const dispatch = useDispatch();
-  const state = useSelector((state) => state.forgot_password);
-  const [open, setOpen] = useState(false);
+  const [forgotPassword, { isLoading, isSuccess, isError, error }] =
+    useForgotPasswordMutation();
 
   const validation = yup.object({
     email: yup.string().required("Email is required"),
@@ -30,12 +27,9 @@ const Forgot_password = () => {
     initialValues: { email: "user@demo.com" },
     validationSchema: validation,
     onSubmit: (value) => {
-      dispatch(forgotPassword(value));
+      forgotPassword(value);
     },
   });
-  useEffect(() => {
-    !state.isLoading && (state.isSuccess||state.isError) && setOpen(true);
-  }, [state.isSuccess, state.isError]);
 
   return (
     <Box boxSizing={"border-box"}>
@@ -48,7 +42,7 @@ const Forgot_password = () => {
                 <Box
                   component="form"
                   onSubmit={formik.handleSubmit}
-                  maxWidth={420}
+                  width={420}
                 >
                   <TextField
                     color="secondary"
@@ -73,7 +67,7 @@ const Forgot_password = () => {
                     size="large"
                     fullWidth
                   >
-                    {state.isLoading ? (
+                    {isLoading ? (
                       <CircularProgress sx={{ color: "#fff" }} />
                     ) : (
                       "Send Reset Link"
@@ -103,29 +97,20 @@ const Forgot_password = () => {
           </Box>
         </Grid>
       </Grid>
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={() => setOpen(false)}
-      >
-        {state.isSuccess ? (
-          <Alert
-            onClose={() => setOpen(false)}
-            severity="success"
-            sx={{ width: "100%" }}
-          >
-            Passwor Reset Link send successfully!
-          </Alert>
-        ) : (
-          <Alert
-            onClose={() => setOpen(false)}
-            severity="error"
-            sx={{ width: "100%" }}
-          >
+      {isSuccess &&
+      <Snackbar open={true} autoHideDuration={4000}>
+        <Alert severity="success" sx={{ width: "100%" }}>
+          Passwor Reset Link send successfully!
+        </Alert>
+      </Snackbar>
+      }
+      {isError && (
+            <Snackbar open={true} autoHideDuration={4000}>
+        <Alert severity="error" sx={{ width: "100%" }}>
             Please Try again with correct email.
           </Alert>
-        )}
-      </Snackbar>
+        </Snackbar>
+      )}
     </Box>
   );
 };

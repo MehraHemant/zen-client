@@ -1,38 +1,44 @@
 import React, { useEffect, useState } from "react";
 import Header from "../Component/Header";
 import { TaskCard, ExtendCard } from "../Component/TaskCard";
-import { Grid, Stack } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
-import { getTask } from "../features/Tasks/tasksSlice";
+import { Grid, Skeleton, Stack } from "@mui/material";
+import { useGetTasksQuery } from "../features/api";
 
 const Task = () => {
-  const dispatch = useDispatch();
-  const task = useSelector((state) => state.task);
+  const { data: taskData, isLoading, isSuccess, isError } = useGetTasksQuery();
   const [data, setData] = useState();
-  const handleClick = (item) => {
-    setData(item);
-  };
-  useEffect(() => {
-    dispatch(getTask());
-  }, []);
   return (
     <div>
       <Header title={"Task"} />
       <Grid container direction={"row"} justifyContent={"center"}>
-        <Grid item xs={6}>
+        {data && (
+          <Grid item xs={12} lg={6}>
+            <ExtendCard data={data} />
+          </Grid>
+        )}
+        <Grid item xs={12} lg={6}>
+          {isLoading && (
+            <Stack direction={"column"} gap={1} alignItems={"center"} mt={1}>
+              <Skeleton animation={"wave"} variant="rounded" height={80} width={720} />
+              <Skeleton animation={"wave"} variant="rounded" height={80} width={720} />
+              <Skeleton animation={"wave"} variant="rounded" height={80} width={720} />
+            </Stack>
+          )}
           <Stack direction="column" alignItems={"center"}>
-            {task.tasks.map((item, i) => {
+            {taskData?.map((item, i) => {
               return (
-                <TaskCard data={item} key={i} handleClick={() => handleClick(item)} />
+                <TaskCard
+                  data={item}
+                  key={i}
+                  handleClick={() => {
+                    setData(item);
+                    window.scrollTo(0, 0);
+                  }}
+                />
               );
             })}
           </Stack>
         </Grid>
-        {data && (
-          <Grid item xs={6}>
-            <ExtendCard />
-          </Grid>
-        )}
       </Grid>
     </div>
   );

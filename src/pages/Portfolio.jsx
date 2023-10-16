@@ -12,19 +12,19 @@ import {
   Typography,
 } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
-import { editProfile } from "../features/student/studentSlice";
+import { useUpdateSelfMutation } from "../features/api";
 
 const validationSchema = yup.object({
   github: yup.string().required(),
 });
 const Portfolio = () => {
-  useSelector((state) => state.student.student);
-  const dispatch = useDispatch();
+  const student = useSelector(state=> state.myReducer.user)
+  const [updateSelf, {isLoading, isSuccess}] = useUpdateSelfMutation();
   const formik = useFormik({
-    initialValues: {github: "", portfolio: "", resume: ""},
+    initialValues: {github: student.github, portfolio: student.portfolio, resume: student.resume},
     validationSchema,
     onSubmit: (values) => {
-      dispatch(editProfile(values));
+      (updateSelf(values));
     },
   });
   return (
@@ -32,9 +32,9 @@ const Portfolio = () => {
       <Header title={"Portfolio"} />
       <Grid container>
         <Grid item>
-          <Box width={450} m={4}>
+          <Box width={{md:450}} m={4}>
             <Box component={"form"} mb={5} onSubmit={formik.handleSubmit}>
-              <Stack spacing={3}>
+              <Stack spacing={3} width={"100%"}>
                 <TextField
                   variant="filled"
                   fullWidth
@@ -80,7 +80,7 @@ const Portfolio = () => {
           </Box>
         </Grid>
         <Grid
-          xs={7}
+          xs={12} md={7}
           padding={5}
           borderLeft={"1px solid"}
           borderColor="action.disabled"
@@ -109,14 +109,16 @@ const Portfolio = () => {
                 Batch :
               </Typography>
               <Typography variant="body2" color={"text.secondary"}>
-                No Submitted
+                {student.batch.name}
               </Typography>
             </Grid>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>
                 Comment:
               </Typography>
-              <Typography variant="body2" color={"text.secondary"}></Typography>
+              <Typography variant="body2" color={"text.secondary"}>
+                No Comment Yet
+              </Typography>
             </Grid>
             <Grid item xs={6} padding={3}>
               <Typography variant="body1" color={"text.primary"}>

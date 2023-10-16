@@ -3,11 +3,17 @@ import Header from "../Component/Header";
 import TestimonialDialog from "../Component/TestimonialDialog";
 import { Box, Button } from "@mui/material";
 import { Add } from "@mui/icons-material";
+import { useUpdateSelfMutation } from "../features/api";
 
 const Testimonial = () => {
   const [open, setOpen] = useState(false);
+  const [updateSelf, {isSuccess, isLoading, isError }] =
+    useUpdateSelfMutation();
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const handleSubmit = (value) => {
+    updateSelf(value);
+  };
   return (
     <>
       <Header title={"Testimonial"} />
@@ -29,7 +35,11 @@ const Testimonial = () => {
           Add Testimonial
         </Button>
       </Box>
-      <TestimonialDialog open={open} onClose={handleClose} />
+      <TestimonialDialog
+        open={open}
+        onClose={handleClose}
+        onSubmit={handleSubmit}
+      />
     </>
   );
 };

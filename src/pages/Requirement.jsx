@@ -16,8 +16,8 @@ const Requirement = () => {
     <Box>
       <Header title={"Requirements"} />
       <Stack spacing={5} padding={5}>
-        {data.map((item) => (
-          <RequirementCard data={item} />
+        {data.map((item, i) => (
+          <RequirementCard key={i} data={item} />
         ))}
       </Stack>
     </Box>

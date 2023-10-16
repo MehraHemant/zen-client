@@ -2,22 +2,23 @@ import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import React, { useEffect } from "react";
 import Header from "../Component/Header";
-import { useDispatch, useSelector } from "react-redux";
-import { editProfile } from "../features/student/studentSlice";
+import {useSelector } from "react-redux";
+import { useUpdateSelfMutation } from "../features/api";
 
 const Profile = () => {
-  const student = useSelector((state) => state.student);
-  const dispatch = useDispatch();
+  const user = useSelector(state => state.myReducer.user)
+
+  const [updateSelf, {isSuccess, isLoading}] = useUpdateSelfMutation();
   const formik = useFormik({
-    initialValues: student.student,
+    initialValues: {...user, batch: user?.batch?.name},
     onSubmit: (values) => {
-      dispatch(editProfile(values));
+      updateSelf(values);
     },
   });
   return (
     <>
       <Header title="My Profile" />
-      {student.student ? (
+      {user ? (
         <Box
           component={"form"}
           onSubmit={formik.handleSubmit}
@@ -280,7 +281,7 @@ const Profile = () => {
               variant="contained"
               sx={{ fontSize: 16, padding: "8px 18px" }}
               type="submit"
-              disabled={student.isLoading}
+              disabled={isLoading}
             >
               Submit
             </Button>

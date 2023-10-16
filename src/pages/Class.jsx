@@ -1,20 +1,17 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  Paper,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
 import React, { useEffect } from "react";
 import Header from "../Component/Header";
-import { useDispatch, useSelector } from "react-redux";
 import Roadmap from "../Component/Roadmap";
+import { useState } from "react";
+import { useGetOneSessionQuery } from "../features/api";
+import moment from "moment/moment";
 
 const Class = () => {
-  const session = useSelector((state) => state.session.session);
+  const [id, setId] = useState(undefined);
+
+  const { data, isSuccess } = useGetOneSessionQuery(id, {
+    skip: id ? false : true,
+  });
   return (
     <Box>
       <Header title={"Class"} />
@@ -33,8 +30,20 @@ const Class = () => {
               <Typography variant="h5" fontSize={25} paddingY={1}>
                 Join Class on time!
               </Typography>
-              {session && (
-                <Button href={session.sessionLink} variant="contained">
+              {isSuccess && data.recording ? (
+                <Button
+                  href={data?.recording}
+                  target="_blank"
+                  variant="outlined"
+                >
+                  Play Recording
+                </Button>
+              ) : (
+                <Button
+                href={data?.sessionLink}
+                target="_blank"
+                variant="outlined"
+                >
                   Join
                 </Button>
               )}
@@ -42,10 +51,10 @@ const Class = () => {
             <Box boxShadow="0px 0px 4px gray" borderRadius={1} padding={2}>
               <Box sx={{ paddingBottom: 2 }}>
                 <Typography variant="h4" color={"text.main"}>
-                  {!session ? "No session title available" : session.title}
+                  {!data ? "No session title available" : data?.title}
                 </Typography>
                 <Typography color={"text.main"}>
-                  {!session ? "Class schedule is not available" : session.time}
+                  {!data ? "Class schedule is not available" : data?.time}
                 </Typography>
               </Box>
               <Divider />
@@ -54,9 +63,9 @@ const Class = () => {
                   Contents :
                 </Typography>
                 <Typography fontSize={15} ml={1}>
-                  {!session
+                  {!data
                     ? "No content available"
-                    : session.contents?.map((item) => <li>{item}</li>)}
+                    : data?.contents?.map((item, i) => <li key={i}>{item}</li>)}
                 </Typography>
               </Box>
               <Box sx={{ paddingBottom: 2 }}>
@@ -64,16 +73,16 @@ const Class = () => {
                   Pre-read :
                 </Typography>
                 <Typography fontSize={15} ml={1}>
-                  {!session
-                    ? "No pre-read available"
-                    : session.pre_read?.map((item) => <li>{item}</li>)}
+                  {data?.pre_read.length < 0
+                    ? data?.pre_read?.map((item, i) => <li key={i}>{item}</li>)
+                    : "No pre-read available"}
                 </Typography>
               </Box>
             </Box>
           </Box>
         </Grid>
         <Grid item xs={12} md={4}>
-            <Roadmap />
+          <Roadmap handleClick={(id) => setId(id)} />
         </Grid>
       </Grid>
     </Box>
