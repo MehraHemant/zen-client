@@ -26,7 +26,11 @@ const Router = () => {
   const routes = useRoutes([
     {
       path: "/",
-      element: <MainLayout />,
+      element: (
+        <PrivateRoute>
+          <MainLayout />
+        </PrivateRoute>
+      ),
       children: [
         { element: <Navigate to="/class" />, index: true },
         {

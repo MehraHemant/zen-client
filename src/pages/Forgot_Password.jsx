@@ -14,11 +14,12 @@ import * as yup from "yup";
 import logo from "../utils/Images/download.png";
 import bg_img from "../utils/Images/home_bg.png";
 import { useForgotPasswordMutation } from "../features/api";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Forgot_password = () => {
   const [forgotPassword, { isLoading, isSuccess, isError, error }] =
     useForgotPasswordMutation();
-
+const navigate = useNavigate();
   const validation = yup.object({
     email: yup.string().required("Email is required"),
   });
@@ -37,7 +38,7 @@ const Forgot_password = () => {
         <Grid item xs={12} md={8}>
           <Grid container>
             <Container>
-              <Typography component="img" height={120} src={logo}></Typography>
+              <Box component="img" height={120} src={logo} onClick={()=>navigate("/")}></Box>
               <Box display="flex" justifyContent="center">
                 <Box
                   component="form"

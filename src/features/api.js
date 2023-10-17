@@ -53,6 +53,7 @@ export const myApi = createApi({
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
         },
+        keepUnusedDataFor: 5,
       }),
       invalidateTags: "user",
     }),

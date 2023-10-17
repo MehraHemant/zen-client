@@ -35,9 +35,9 @@ const Createuser = () => {
   const formik = useFormik({
     initialValues: { email: "", password: "", name: "", contact: "" },
     validationSchema: validation,
-    onSubmit: (value) => {
-      createStudent(value);
-      console.log(value);
+    onSubmit: async(value, {resetForm}) => {
+      await createStudent(value);
+      resetForm();
     },
   });
   return (
@@ -203,7 +203,7 @@ const Createuser = () => {
       {isError && (
         <Snackbar open={true} autoHideDuration={3000}>
           <Alert severity={"error"} sx={{ width: "100%" }}>
-            {error.message}
+            {error?.data.message}
           </Alert>
         </Snackbar>
       )}
