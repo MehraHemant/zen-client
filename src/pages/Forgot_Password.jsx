@@ -7,14 +7,13 @@ import {
   Grid,
   Snackbar,
   TextField,
-  Typography,
 } from "@mui/material";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import logo from "../utils/Images/download.png";
 import bg_img from "../utils/Images/home_bg.png";
 import { useForgotPasswordMutation } from "../features/api";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Forgot_password = () => {
   const [forgotPassword, { isLoading, isSuccess, isError, error }] =

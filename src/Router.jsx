@@ -21,6 +21,7 @@ import Webcode from "./pages/Webcode";
 import Capstone from "./pages/Capstone";
 import Forgot_password from "./pages/Forgot_Password";
 import Createuser from "./pages/CreateUser";
+import ResetPassword from "./pages/ResetPassword";
 
 const Router = () => {
   const routes = useRoutes([
@@ -162,6 +163,10 @@ const Router = () => {
     {
       path: "/forgot_password",
       element: <Forgot_password />,
+    },
+    {
+      path: "/resetpassword/:token",
+      element: <ResetPassword/>,
     },
     {
       path: "/create_account",

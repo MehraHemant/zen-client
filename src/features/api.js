@@ -8,13 +8,13 @@ export const myApi = createApi({
   tagTypes: ["session", "tasks", "user"],
   endpoints: (builder) => ({
     getSession: builder.query({
-      query: ()=>({
-      url: `session/get-all-sessions`,
-      providesTags: "session",
-      headers: {
-        authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
-      },
-    })
+      query: () => ({
+        url: `session/get-all-sessions`,
+        providesTags: "session",
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
     }),
     getOneSession: builder.query({
       query: (id) => `session/get-session/${id}`,
@@ -53,7 +53,7 @@ export const myApi = createApi({
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
         },
-        keepUnusedDataFor: 5,
+        keepUnusedDataFor: 1,
       }),
       invalidateTags: "user",
     }),
@@ -71,6 +71,13 @@ export const myApi = createApi({
         body: data,
       }),
     }),
+    resetPassword: builder.mutation({
+      query: (token, data) => ({
+        url: `/reset-password/${token}`,
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
@@ -83,4 +90,5 @@ export const {
   useUpdateSelfMutation,
   useCreateStudentMutation,
   useForgotPasswordMutation,
+  useResetPasswordMutation,
 } = myApi;
