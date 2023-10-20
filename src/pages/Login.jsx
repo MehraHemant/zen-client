@@ -41,6 +41,10 @@ const Login = () => {
       }
     },
   });
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    token && navigate("/class");
+  });
   return (
     <Box boxSizing={"border-box"}>
       <Grid container>
