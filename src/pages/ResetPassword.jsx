@@ -19,17 +19,20 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useRef, useState } from "react";
 
 const ResetPassword = () => {
-  const [showPassword, setShowPassword] = useState();
+  const navigate = useNavigate();
   const { token } = useParams();
+  
+  const [showPassword, setShowPassword] = useState();
   const [resetPassword, { isLoading, isSuccess, isError, error, reset }] =
     useResetPasswordMutation();
-  const navigate = useNavigate();
+  
   const validationSchema = yup.object({
     password: yup.string().required("Password is required"),
     passwordConfirmation: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match"),
   });
+
   const resetref = useRef(reset);
   resetref.current = reset;
 
