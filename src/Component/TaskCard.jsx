@@ -149,7 +149,7 @@ export const ExtendCard = ({ data }) => {
             color={"text.secondary"}
             sx={{ backgroundColor: "white", paddingY: 2, paddingX: 1 }}
           >
-            Comment Here
+            {data?.comment}
           </Typography>
         </Grid>
       </Grid>

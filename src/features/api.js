@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const myApi = createApi({
   reducerPath: "myApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://zen-portal-backend.onrender.com/api/",
+    baseUrl: "http://localhost:8080/api/",
   }),
   tagTypes: ["session", "tasks", "user"],
   endpoints: (builder) => ({
@@ -53,7 +53,6 @@ export const myApi = createApi({
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
         },
-        keepUnusedDataFor: 1,
       }),
       invalidateTags: "user",
     }),
@@ -78,6 +77,27 @@ export const myApi = createApi({
         body: data,
       }),
     }),
+    getCapstone: builder.query({
+      query: () => ({
+        url: "/answers/capstone",
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+    }),
+    getWebcode: builder.query({
+      query: () => ({
+        url: "/answers/webcode",
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+    }),
+    getPlacement: builder.query({
+      query: ()=>({
+        url: "placement/get"
+      })
+    })
   }),
 });
 
@@ -91,4 +111,7 @@ export const {
   useCreateStudentMutation,
   useForgotPasswordMutation,
   useResetPasswordMutation,
+  useGetCapstoneQuery,
+  useGetWebcodeQuery,
+  useGetPlacementQuery
 } = myApi;

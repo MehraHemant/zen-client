@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-const PlacementCard = () => {
+const PlacementCard = ({data}) => {
   return (
     <>
       <Box margin={3}>
@@ -23,9 +23,9 @@ const PlacementCard = () => {
             alignItems={"Center"}
           >
             <CardContent>
-              <Typography variant="h5">Purushothaman Ravichandran</Typography>
-              <Typography variant="body1">B38 WD Tamil</Typography>
-              <Typography variant="body1">FSD-MERN</Typography>
+              <Typography variant="h5">{data.name}</Typography>
+              <Typography variant="body1">{data.batch}</Typography>
+              <Typography variant="body1">{data.course}</Typography>
             </CardContent>
             <CardContent sx={{ height: "100%" }}>
               <Avatar />
@@ -34,14 +34,14 @@ const PlacementCard = () => {
           <Divider />
           <CardContent>
             <Typography variant="body1" gutterBottom>
-              Company : <strong>Paripooran</strong>
+              Company : <strong>{data.company}</strong>
             </Typography>
 
             <Typography variant="body1" gutterBottom>
-              Current CTC : <strong>3 LPA</strong>
+              Current CTC : <strong>{data.ctc}</strong>
             </Typography>
             <Typography variant="body1">
-              Placed Through : <strong>Guvi</strong>
+              Placed Through : <strong>{data.placedThrough}</strong>
             </Typography>
           </CardContent>
         </Card>
