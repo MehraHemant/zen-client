@@ -1,9 +1,22 @@
-import { Box, Button, Divider, Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Paper,
+  Stack,
+  Typography,
+} from "@mui/material";
 import React from "react";
 import Header from "../Component/Header";
 import Roadmap from "../Component/Roadmap";
 import { useState } from "react";
-import { useGetOneSessionQuery } from "../features/api";
+import {
+  useGetActivityQuery,
+  useGetAnswerByIdQuery,
+  useGetOneSessionQuery,
+} from "../features/api";
+import ActivityCard from "../Component/ActivityCard";
 
 const Class = () => {
   const [id, setId] = useState(undefined);
@@ -11,11 +24,20 @@ const Class = () => {
   const { data, isSuccess } = useGetOneSessionQuery(id, {
     skip: id ? false : true,
   });
+  const { data: activityData } = useGetActivityQuery(data?._id, {
+    skip: data ? false : true,
+  });
+  const { data: answers, isSuccess: answerSuccess } = useGetAnswerByIdQuery(
+    activityData?._id,
+    {
+      skip: activityData ? false : true,
+    }
+  );
   return (
     <Box>
       <Header title={"Class"} />
       <Grid container spacing={3} marginY={3}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={7} lg={8}>
           <Box padding={2}>
             <Stack
               marginY={2}
@@ -29,21 +51,13 @@ const Class = () => {
               <Typography variant="h5" fontSize={25} paddingY={1}>
                 Join Class on time!
               </Typography>
-              {isSuccess && data.recording ? (
+              {data?.recording && (
                 <Button
                   href={data?.recording}
                   target="_blank"
                   variant="outlined"
                 >
                   Play Recording
-                </Button>
-              ) : (
-                <Button
-                href={data?.sessionLink}
-                target="_blank"
-                variant="outlined"
-                >
-                  Join
                 </Button>
               )}
             </Stack>
@@ -79,9 +93,30 @@ const Class = () => {
               </Box>
             </Box>
           </Box>
+          <Box p={3}>
+            {answerSuccess && (
+              <ActivityCard data={activityData} answers={answers} />
+            )}
+          </Box>
         </Grid>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} md={5} lg={4}>
           <Roadmap handleClick={(id) => setId(id)} />
+          <Box display={"flex"} justifyContent={"center"}>
+            <Paper
+              elevation={4}
+              sx={{
+                mt: 2,
+                width: "450px",
+                minHeight: "30px",
+                borderRadius: "7px",
+                p: 2,
+              }}
+            >
+              <Typography variant="h4">Additional Sessions</Typography>
+              <Divider />
+              <Typography variant="h6"></Typography>
+            </Paper>
+          </Box>
         </Grid>
       </Grid>
     </Box>

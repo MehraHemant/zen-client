@@ -5,7 +5,7 @@ export const myApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:8080/api/",
   }),
-  tagTypes: ["session", "tasks", "user"],
+  tagTypes: ["session", "tasks", "user", "taskAnswers"],
   endpoints: (builder) => ({
     getSession: builder.query({
       query: () => ({
@@ -71,10 +71,10 @@ export const myApi = createApi({
       }),
     }),
     resetPassword: builder.mutation({
-      query: (token, data) => ({
-        url: `/reset-password/${token}`,
+      query: (data) => ({
+        url: `/reset-password/${data.token}`,
         method: "POST",
-        body: data,
+        body: data.value,
       }),
     }),
     getCapstone: builder.query({
@@ -94,10 +94,51 @@ export const myApi = createApi({
       }),
     }),
     getPlacement: builder.query({
-      query: ()=>({
-        url: "placement/get"
-      })
-    })
+      query: () => ({
+        url: "placement/get",
+      }),
+    }),
+    getActivity: builder.query({
+      query: (session) => ({
+        url: `activity/get/${session}`,
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+    }),
+    getAnswerById: builder.query({
+      query: (activity) => ({
+        url: `answers/get/${activity}`,
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+      providesTags: "tasksAnswers",
+    }),
+    postTaskAnswers: builder.mutation({
+      query: (data) => ({
+        // activity id
+        url: `answers/post/${data.id}`,
+        method: "POST",
+        body: data.value,
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+      invalidateTags: "taksAnswers",
+    }),
+    updateAnswers: builder.mutation({
+      query: (data) => ({
+        // answer id
+        url: `answers/update/${data.id}`,
+        method: "PUT",
+        body: data.value,
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+      invalidateTags: "taksAnswers",
+    }),
   }),
 });
 
@@ -113,5 +154,9 @@ export const {
   useResetPasswordMutation,
   useGetCapstoneQuery,
   useGetWebcodeQuery,
-  useGetPlacementQuery
+  useGetPlacementQuery,
+  useGetActivityQuery,
+  useGetAnswerByIdQuery,
+  usePostTaskAnswersMutation,
+  useUpdateAnswersMutation,
 } = myApi;

@@ -21,11 +21,11 @@ import { useRef, useState } from "react";
 const ResetPassword = () => {
   const navigate = useNavigate();
   const { token } = useParams();
-  
+
   const [showPassword, setShowPassword] = useState();
   const [resetPassword, { isLoading, isSuccess, isError, error, reset }] =
     useResetPasswordMutation();
-  
+
   const validationSchema = yup.object({
     password: yup.string().required("Password is required"),
     passwordConfirmation: yup
@@ -40,7 +40,7 @@ const ResetPassword = () => {
     initialValues: { password: "", confirmPassword: "" },
     validationSchema,
     onSubmit: async (value) => {
-      await resetPassword(token, value.password);
+      await resetPassword({ token, value: value.password });
       setTimeout(() => resetref.current(), 2000);
     },
   });
