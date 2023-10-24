@@ -1,9 +1,6 @@
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
 import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
-import React, { useEffect } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-import { useGetSessionQuery } from "../features/api";
+import React from "react";
+import { useGetRoadmapSessionQuery} from "../features/api";
 
 const RoadmapIcon = ({ title, onClick }) => {
   return (
@@ -28,7 +25,7 @@ const RoadmapIcon = ({ title, onClick }) => {
 };
 
 const Roadmap = ({ handleClick }) => {
-  const { data, isLoading, isError, isSuccess } = useGetSessionQuery();
+  const { data, isSuccess, isLoading, isError } = useGetRoadmapSessionQuery();
   return (
     <Box display={"flex"} justifyContent={"center"} alignItems={"center"}>
       <Paper
@@ -49,13 +46,14 @@ const Roadmap = ({ handleClick }) => {
           Session Roadmap
         </Typography>
         <Grid container rowSpacing={2} margin={"auto"} p="8px">
-          {isError && (
-            <Typography variant="h4" color="primary.light" textAlign={"center"}>
+          {isError || isLoading && (
+            <Typography variant="h5" textAlign={"center"}>
               No Batch assigned to you.
             </Typography>
           )}
           {isSuccess &&
             data?.map((value, index) => (
+              (value.sessionType === "roadmap") &&
               <Grid item xs={2.4} key={value._id} textAlign={"center"}>
                 <RoadmapIcon
                   title={index + 1}

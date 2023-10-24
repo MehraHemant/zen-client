@@ -3,13 +3,22 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const myApi = createApi({
   reducerPath: "myApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:8080/api/",
+    baseUrl: "https://zen-portal-backend.onrender.com/api/",
   }),
   tagTypes: ["session", "tasks", "user", "taskAnswers"],
   endpoints: (builder) => ({
-    getSession: builder.query({
+    getRoadmapSession: builder.query({
       query: () => ({
-        url: `session/get-all-sessions`,
+        url: `session/get-roadmap-sessions`,
+        providesTags: "session",
+        headers: {
+          authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
+        },
+      }),
+    }),
+    getAdditionalSession: builder.query({
+      query: () => ({
+        url: `session/get-additional-sessions`,
         providesTags: "session",
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
@@ -143,7 +152,8 @@ export const myApi = createApi({
 });
 
 export const {
-  useGetSessionQuery,
+  useGetAdditionalSessionQuery,
+  useGetRoadmapSessionQuery,
   useGetOneSessionQuery,
   useLoginMutation,
   useGetTasksQuery,

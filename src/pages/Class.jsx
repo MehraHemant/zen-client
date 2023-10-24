@@ -1,6 +1,8 @@
 import {
   Box,
   Button,
+  Card,
+  CardContent,
   Divider,
   Grid,
   Paper,
@@ -13,6 +15,7 @@ import Roadmap from "../Component/Roadmap";
 import { useState } from "react";
 import {
   useGetActivityQuery,
+  useGetAdditionalSessionQuery,
   useGetAnswerByIdQuery,
   useGetOneSessionQuery,
 } from "../features/api";
@@ -20,8 +23,9 @@ import ActivityCard from "../Component/ActivityCard";
 
 const Class = () => {
   const [id, setId] = useState(undefined);
+  const { data: additionalSession, isSuccess } = useGetAdditionalSessionQuery();
 
-  const { data, isSuccess } = useGetOneSessionQuery(id, {
+  const { data } = useGetOneSessionQuery(id, {
     skip: id ? false : true,
   });
   const { data: activityData } = useGetActivityQuery(data?._id, {
@@ -100,23 +104,46 @@ const Class = () => {
           </Box>
         </Grid>
         <Grid item xs={12} md={5} lg={4}>
-          <Roadmap handleClick={(id) => setId(id)} />
-          <Box display={"flex"} justifyContent={"center"}>
-            <Paper
-              elevation={4}
-              sx={{
-                mt: 2,
-                width: "450px",
-                minHeight: "30px",
-                borderRadius: "7px",
-                p: 2,
-              }}
-            >
-              <Typography variant="h4">Additional Sessions</Typography>
-              <Divider />
-              <Typography variant="h6"></Typography>
-            </Paper>
-          </Box>
+          <Roadmap
+            handleClick={(id) => setId(id)}
+          />
+          {isSuccess && additionalSession?.length > 0 && (
+            <Box display={"flex"} justifyContent={"center"}>
+              <Paper
+                elevation={4}
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 2,
+                  mt: 2,
+                  width: "450px",
+                  minHeight: "30px",
+                  borderRadius: "7px",
+                  background: "#F7F7F8",
+                  p: 2,
+                }}
+              >
+                <Typography
+                  variant="h5"
+                  p={2}
+                  bgcolor="secondary.lighter"
+                  borderRadius="7px 7px 0px 0px"
+                >
+                  Additional Sessions
+                </Typography>
+                {additionalSession.map((value, i) => (
+                  <Card key={i} onClick={()=> setId(value._id)} sx={{cursor:"pointer"}}>
+                    <CardContent>
+                      <Typography variant="h5" fontWeight={600}>
+                        {value.title}
+                      </Typography>
+                      <Typography variant="subtitle1">{value.time}</Typography>
+                    </CardContent>
+                  </Card>
+                ))}
+              </Paper>
+            </Box>
+          )}
         </Grid>
       </Grid>
     </Box>

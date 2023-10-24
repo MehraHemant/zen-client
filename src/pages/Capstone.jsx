@@ -6,12 +6,16 @@ import CapstoneCard from "../Component/CapstoneCard";
 
 const Capstone = () => {
   const { data, isLoading } = useGetCapstoneQuery();
+  console.log(data);
   return (
     <>
       <Header title={"Capstone"} />
 
       {data?.length > 0 ? (
-        <CapstoneCard data={data} />
+        data.map(item=>{
+
+          <CapstoneCard data={item} />
+        })
       ) : (
         <Box padding={4}>
           <Typography

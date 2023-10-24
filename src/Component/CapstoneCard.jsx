@@ -10,10 +10,10 @@ const CapstoneCard = ({ data }) => {
           <Grid item xs container>
             <Grid item xs={12} md={8}>
               <Typography variant="h5" color="text.primary">
-                {data?.student.name}
+                {data?.student?.name}
               </Typography>
               <Typography variant="body1" color="text.secondary">
-                {data?.activities.session.title}
+                {data?.activities?.session?.title}
               </Typography>
             </Grid>
             <Grid item xs={12} md={3}>
@@ -34,7 +34,7 @@ const CapstoneCard = ({ data }) => {
             </Grid>
           </Grid>
           <Grid item xs={12} mt={5}>
-            <Typography variant="h6" color="text.Secondary" gutterBottom>
+            <Typography variant="h6" fontWeight={400} color="text.Secondary" gutterBottom>
               Student Comments :
             </Typography>
             <Typography
@@ -56,32 +56,32 @@ const CapstoneCard = ({ data }) => {
                 <Typography variant="body1" mr={1}>
                   Front-end Source code :
                 </Typography>
-                <Link href={data?.answer.deployedClient}>
-                  {data?.answer.deployedClient}
+                <Link href={data?.answer?.deployedClient}>
+                  {data?.answer?.deployedClient}
                 </Link>
               </Box>
               <Box display={"flex"}>
                 <Typography variant="body1" mr={1}>
                   Back-end Source code :
                 </Typography>
-                <Link href={data?.answer.deployedServer}>
-                  {data?.answer.deployedServer}
+                <Link href={data?.answer?.deployedServer}>
+                  {data?.answer?.deployedServer}
                 </Link>
               </Box>
               <Box display={"flex"}>
                 <Typography variant="body1" mr={1}>
                   Front-end Deployment link :
                 </Typography>
-                <Link href={data?.answer.githubClient}>
-                  {data?.answer.githubClient}
+                <Link href={data?.answer?.githubClient}>
+                  {data?.answer?.githubClient}
                 </Link>
               </Box>
               <Box display={"flex"}>
                 <Typography variant="body1" mr={1}>
                   Back-end Deployment link :
                 </Typography>
-                <Link href={data?.answer.githubServer}>
-                  {data?.answer.githubServer}
+                <Link href={data?.answer?.githubServer}>
+                  {data?.answer?.githubServer}
                 </Link>
               </Box>
             </Stack>
