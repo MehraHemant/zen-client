@@ -109,7 +109,7 @@ const Portfolio = () => {
                 Batch :
               </Typography>
               <Typography variant="body2" color={"text.secondary"}>
-                {student.batch.name}
+                {student?.batch?.name}
               </Typography>
             </Grid>
             <Grid item xs={6} padding={3}>

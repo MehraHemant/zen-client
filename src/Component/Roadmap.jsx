@@ -1,6 +1,6 @@
 import { Box, Grid, IconButton, Paper, Typography } from "@mui/material";
 import React from "react";
-import { useGetRoadmapSessionQuery} from "../features/api";
+import { useGetRoadmapSessionQuery } from "../features/api";
 
 const RoadmapIcon = ({ title, onClick }) => {
   return (
@@ -32,7 +32,7 @@ const Roadmap = ({ handleClick }) => {
         elevation={3}
         sx={{
           width: "450px",
-          minHeight: "500px",
+          minHeight: "300px",
           pb: "16px",
           borderRadius: "7px",
         }}
@@ -46,21 +46,25 @@ const Roadmap = ({ handleClick }) => {
           Session Roadmap
         </Typography>
         <Grid container rowSpacing={2} margin={"auto"} p="8px">
-          {isError || isLoading && (
-            <Typography variant="h5" textAlign={"center"}>
-              No Batch assigned to you.
-            </Typography>
+          {data.length <= 0 && (
+            <Grid item xs={12}>
+              <Typography variant="h5" textAlign={"center"}>
+                No Batch assigned to you.
+              </Typography>
+            </Grid>
           )}
           {isSuccess &&
-            data?.map((value, index) => (
-              (value.sessionType === "roadmap") &&
-              <Grid item xs={2.4} key={value._id} textAlign={"center"}>
-                <RoadmapIcon
-                  title={index + 1}
-                  onClick={() => handleClick(value._id)}
-                />
-              </Grid>
-            ))}
+            data?.map(
+              (value, index) =>
+                value.sessionType === "roadmap" && (
+                  <Grid item xs={2.4} key={value._id} textAlign={"center"}>
+                    <RoadmapIcon
+                      title={index + 1}
+                      onClick={() => handleClick(value._id)}
+                    />
+                  </Grid>
+                )
+            )}
         </Grid>
       </Paper>
     </Box>

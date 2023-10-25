@@ -13,7 +13,6 @@ const Capstone = () => {
 
       {data?.length > 0 ? (
         data.map(item=>{
-
           <CapstoneCard data={item} />
         })
       ) : (
