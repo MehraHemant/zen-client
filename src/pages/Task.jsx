@@ -11,7 +11,7 @@ const Task = () => {
     <div>
       <Header title={"Task"} />
       <Grid container direction={"row"} justifyContent={"center"}>
-        {taskData.length <= 0 && (
+        {taskData?.length <= 0 && (
           <Grid title xs={12}>
             <Typography variant="h3" mt={5} textAlign={'center'} fontWeight={400}>
               No Tasks Found

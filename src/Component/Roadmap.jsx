@@ -46,7 +46,7 @@ const Roadmap = ({ handleClick }) => {
           Session Roadmap
         </Typography>
         <Grid container rowSpacing={2} margin={"auto"} p="8px">
-          {data.length <= 0 && (
+          {data?.length <= 0 && (
             <Grid item xs={12}>
               <Typography variant="h5" textAlign={"center"}>
                 No Batch assigned to you.

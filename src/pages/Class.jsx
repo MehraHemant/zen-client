@@ -16,7 +16,7 @@ import { useState } from "react";
 import {
   useGetActivityQuery,
   useGetAdditionalSessionQuery,
-  useGetAnswerByIdQuery,
+  useGetAnswerByActivityQuery,
   useGetOneSessionQuery,
 } from "../features/api";
 import ActivityCard from "../Component/ActivityCard";
@@ -31,7 +31,7 @@ const Class = () => {
   const { data: activityData } = useGetActivityQuery(data?._id, {
     skip: data ? false : true,
   });
-  const { data: answers, isSuccess: answerSuccess } = useGetAnswerByIdQuery(
+  const { data: answers, isSuccess: answerSuccess } = useGetAnswerByActivityQuery(
     activityData?._id,
     {
       skip: activityData ? false : true,

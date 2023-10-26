@@ -1,33 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Component/Header";
-import { Box, Typography } from "@mui/material";
-import { useGetCapstoneQuery } from "../features/api";
-import CapstoneCard from "../Component/CapstoneCard";
+import { Box, Grid, Typography } from "@mui/material";
+import {
+  useGetAnswerByActivityQuery,
+  useGetCapstoneQuery,
+} from "../features/api";
+import CapstoneCard, { ExtendCapstone } from "../Component/CapstoneCard";
 
 const Capstone = () => {
-  const { data, isLoading } = useGetCapstoneQuery();
-  console.log(data);
+  const { data, isLoading, isSuccess } = useGetCapstoneQuery();
+
+  const [id, setId] = useState(false);
+  const [md, setMd] = useState(12);
   return (
     <>
       <Header title={"Capstone"} />
-
-      {data?.length > 0 ? (
-        data.map(item=>{
-          <CapstoneCard data={item} />
-        })
-      ) : (
-        <Box padding={4}>
-          <Typography
-            textAlign={"center"}
-            variant="h4"
-            fontWeight={400}
-            fontFamily={"ubuntu"}
-            color="text.secondary"
-          >
-            No Capstone available
-          </Typography>
-        </Box>
-      )}
+      <Grid container justifyItems={"center"}>
+        <Grid item xs={12} md={md} display={"flex"} justifyContent={"center"}>
+          {isSuccess &&
+            (data?.length > 0 ? (
+              data?.map((item, i) => (
+                <CapstoneCard
+                  key={i}
+                  data={item}
+                  handleClick={() => {
+                    setId((id) => !id), setMd((md) => (md == 6 ? 12 : 6));
+                  }}
+                />
+              ))
+            ) : (
+              <Box padding={4}>
+                <Typography
+                  textAlign={"center"}
+                  variant="h4"
+                  fontWeight={400}
+                  fontFamily={"ubuntu"}
+                  color="text.secondary"
+                >
+                  No Capstone available
+                </Typography>
+              </Box>
+            ))}
+        </Grid>
+        {id && (
+          <Grid item xs={12} md={6}>
+            {isSuccess &&
+              data?.map((item, i) => <ExtendCapstone key={i} data={item} />)}
+          </Grid>
+        )}
+      </Grid>
     </>
   );
 };

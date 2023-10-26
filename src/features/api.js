@@ -88,7 +88,7 @@ export const myApi = createApi({
     }),
     getCapstone: builder.query({
       query: () => ({
-        url: "/answers/capstone",
+        url: "/activity/getCapstone",
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
         },
@@ -96,7 +96,7 @@ export const myApi = createApi({
     }),
     getWebcode: builder.query({
       query: () => ({
-        url: "/answers/webcode",
+        url: "/activity/getwebcode",
         headers: {
           authorization: `Bearer ${JSON.parse(localStorage.getItem("user"))}`,
         },
@@ -115,7 +115,7 @@ export const myApi = createApi({
         },
       }),
     }),
-    getAnswerById: builder.query({
+    getAnswerByActivity: builder.query({
       query: (activity) => ({
         url: `answers/get/${activity}`,
         headers: {
@@ -166,7 +166,7 @@ export const {
   useGetWebcodeQuery,
   useGetPlacementQuery,
   useGetActivityQuery,
-  useGetAnswerByIdQuery,
+  useGetAnswerByActivityQuery,
   usePostTaskAnswersMutation,
   useUpdateAnswersMutation,
 } = myApi;

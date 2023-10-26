@@ -1,29 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../Component/Header";
-import { Box, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useGetWebcodeQuery } from "../features/api";
-import WebcodeCard from "../Component/WebcodeCard";
+import CapstoneCard, { ExtendCapstone } from "../Component/CapstoneCard";
 
 const Webcode = () => {
-  const { data, isLoading } = useGetWebcodeQuery();
+  const { data, isLoading, isSuccess } = useGetWebcodeQuery();
+  const [md, setMd] = useState(12);
+  const [id, setId] = useState(false);
   return (
     <>
-      <Header title={"Capstone"} />
-      {data?.length > 0 ? (
-        <WebcodeCard data={data} />
-      ) : (
-        <Box padding={4}>
-          <Typography
-            textAlign={"center"}
-            variant="h4"
-            fontWeight={400}
-            fontFamily={"ubuntu"}
-            color="text.secondary"
-          >
-            No Webcode available
-          </Typography>
-        </Box>
-      )}
+      <Header title={"Webcode"} />
+      <Grid container justifyItems={"center"}>
+        <Grid item xs={12} md={md} display={"flex"} justifyContent={"center"}>
+          {isSuccess &&
+            (data?.length > 0 ? (
+              data?.map((item, i) => (
+                <CapstoneCard
+                  key={i}
+                  data={item}
+                  handleClick={() => {
+                    setId((id) => !id), setMd((md) => (md == 6 ? 12 : 6));
+                  }}
+                />
+              ))
+            ) : (
+              <Box padding={4}>
+                <Typography
+                  textAlign={"center"}
+                  variant="h4"
+                  fontWeight={400}
+                  fontFamily={"ubuntu"}
+                  color="text.secondary"
+                >
+                  No Webcode available
+                </Typography>
+              </Box>
+            ))}
+        </Grid>
+        {id && (
+          <Grid item xs={12} md={6}>
+            {isSuccess &&
+              data?.map((item, i) => <ExtendCapstone key={i} data={item} />)}
+          </Grid>
+        )}
+      </Grid>
     </>
   );
 };
