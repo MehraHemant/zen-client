@@ -25,8 +25,8 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
       reason: "",
     },
     onSubmit: async (values) => {
-      onSubmit(values);
-      
+      // onSubmit(values);
+      console.log(values);
     },
     validateOnChange: false,
   });
@@ -135,7 +135,6 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
                       name="toDate"
                       format="DD/MM/YYYY"
                       onChange={(value) => {
-                        console.log(new Date(value._d));
                         formik.setFieldValue(
                           "toDate",
                           value._d.getTime(),
@@ -170,7 +169,6 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
               Submit
             </Button>
           </Stack>
-
         </Box>
       </Dialog>
     </>

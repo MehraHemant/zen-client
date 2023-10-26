@@ -34,8 +34,9 @@ const Login = () => {
     validationSchema: validation,
     onSubmit: async (value, { resetForm }) => {
       try {
-        await login(value);
-        navigate("/class");
+        login(value).then(() => {
+          navigate("/class");
+        });
       } catch (error) {
         resetForm();
       }
