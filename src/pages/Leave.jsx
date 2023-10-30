@@ -8,7 +8,6 @@ import { useSelector } from "react-redux";
 
 const Leave = () => {
   const state = useSelector((state) => state.myReducer.user);
-  const leave = 0;
   const [open, setOpen] = useState(false);
   const[send, setSend] = useState(false);
   const handleClose = () => setOpen(false);
@@ -52,7 +51,7 @@ const Leave = () => {
         />
       </Box>
       <Box m={5}>
-        <Box>{leave}</Box>
+        <Box>{state?.leave}</Box>
       </Box>
       <Snackbar
         open={send}

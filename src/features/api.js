@@ -148,6 +148,16 @@ export const myApi = createApi({
       }),
       invalidateTags: "taksAnswers",
     }),
+    application: builder.query({
+      query: ()=>{
+        url: `application`
+      }
+    }),
+    cerificate: builder.query({
+      query:()=>{
+        url: `certificate`
+      }
+    }),
   }),
 });
 
@@ -169,4 +179,6 @@ export const {
   useGetAnswerByActivityQuery,
   usePostTaskAnswersMutation,
   useUpdateAnswersMutation,
+  useApplicationQuery,
+  useCerificateQuery,
 } = myApi;
