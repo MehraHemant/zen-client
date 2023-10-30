@@ -149,14 +149,14 @@ export const myApi = createApi({
       invalidateTags: "taksAnswers",
     }),
     application: builder.query({
-      query: ()=>{
+      query: ()=>({
         url: `application`
-      }
+      })
     }),
     cerificate: builder.query({
-      query:()=>{
-        url: `certificate`
-      }
+  query:()=>({
+    url: `certificate`
+  })
     }),
   }),
 });
