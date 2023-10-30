@@ -25,8 +25,7 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
       reason: "",
     },
     onSubmit: async (values) => {
-      // onSubmit(values);
-      console.log(values);
+      onSubmit(values);
     },
     validateOnChange: false,
   });
@@ -95,7 +94,7 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
                     color={"text.secondary"}
                     gutterBottom
                   >
-                    From
+                    To
                   </Typography>
                   <LocalizationProvider dateAdapter={AdapterMoment}>
                     <DatePicker
@@ -106,7 +105,7 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
                       onChange={(value) => {
                         formik.setFieldValue(
                           "fromDate",
-                          value._d.getDate(),
+                          value._d.getTime(),
                           true
                         );
                       }}
@@ -120,6 +119,7 @@ const LeaveDialog = ({ open, onClose, onSubmit }) => {
                     />
                   </LocalizationProvider>
                 </Box>
+
                 <Box>
                   <Typography
                     variant="body1"
