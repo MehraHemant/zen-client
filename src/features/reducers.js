@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { myApi } from "./api";
-import { Navigate, useNavigate } from "react-router-dom";
 
 const myReducer = createSlice({
   name: "myReducer",
