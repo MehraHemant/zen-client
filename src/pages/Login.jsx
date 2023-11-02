@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { useLoginMutation } from "../features/api";
 import { VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -34,9 +35,9 @@ const Login = () => {
     validationSchema: validation,
     onSubmit: async (value, { resetForm }) => {
       try {
-        login(value).then(() => {
-          navigate("/class");
-        });
+        login(value)
+          .unwrap()
+          .then(() => navigate("/class"));
       } catch (error) {
         resetForm();
       }
